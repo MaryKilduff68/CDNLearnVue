@@ -14,11 +14,14 @@ createApp({
     const data = reactive(DEFAULT_STATE);
     ///methods
     const addNameToList = () => {
+      const userName = data.inputName
+      data.names.push(userName)
+      data.inputName = ''
 
-    }
+    };
     return {
       data,
-      addNameToList
+      addNameToList,
     };
   },
 }).mount("#app");
