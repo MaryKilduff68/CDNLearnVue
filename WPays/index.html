@@ -32,8 +32,19 @@
                 {{name}}
               </div>
             </div>
+            <div v-if="isReady" class="animate__animated animate_bounceIn" @click="showResults">
+              <div class="action_button"> Check the loser </div>
+            </div>
         </div>
-        <div id="results" class="container" v-if="!data.state">Second Container</div>
+        <div id="results" class="container" v-if="!data.state">
+          <div class="results_container">
+            <h1> The loser is:</h1>
+            <div class="result_value">
+              {{data.result}}
+            </div>
+          </div>
+
+        </div>
     </div>
   </body>
   <script src="js/app.js"></script>

@@ -2,22 +2,29 @@ const { createApp, reactive, computed } = Vue;
 
 const DEFAULT_STATE = {
   state: true,
-  inputName: '',
+  inputName: "",
   names: [],
-  error: '',
+  error: "",
   showError: false,
-  result: '',
+  result: "",
 };
 
 createApp({
   setup() {
     const data = reactive(DEFAULT_STATE);
+
+    ///computed
+
+    const isReady = computed(() => {
+      return data.names.length > 1;
+    });
+
     ///methods
     const addNameToList = () => {
       const userName = data.inputName;
       if (validate(userName)) {
         data.names.push(userName);
-        data.inputName = '';
+        data.inputName = "";
         data.showError = false;
       } else {
         data.showError = true;
@@ -38,10 +45,26 @@ createApp({
     const removeName = (index) => {
       data.names.splice(index, 1);
     };
+
+    const getRandomName = () => {
+      return data.names[Math.floor(Math.random() * data.names.length)];
+    };
+
+    const generateResult = () => {
+      let rand = getRandomName();
+      data.result = rand;
+    };
+
+    const showResults = () => {
+      generateResult();
+      data.state = false;
+    };
     return {
       data,
       addNameToList,
       removeName,
+      isReady,
+      showResults,
     };
   },
 }).mount("#app");
