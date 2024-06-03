@@ -52,12 +52,29 @@ createApp({
 
     const generateResult = () => {
       let rand = getRandomName();
-      data.result = rand;
+      if (data.result !== "")
+        while (rand === data.result) {
+         rand = getRandomName()
+        }
+        data.result = rand;
     };
 
     const showResults = () => {
       generateResult();
       data.state = false;
+    };
+
+    const resetApp = () => {
+      data.state = true;
+      data.inputName = "";
+      data.names = [];
+      data.error = "";
+      data.showError = false;
+      data.result = "";
+    };
+
+    const getNewResult = () => {
+      generateResult();
     };
     return {
       data,
@@ -65,6 +82,8 @@ createApp({
       removeName,
       isReady,
       showResults,
+      resetApp,
+      getNewResult,
     };
   },
 }).mount("#app");
