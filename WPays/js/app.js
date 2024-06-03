@@ -2,11 +2,11 @@ const { createApp, reactive, computed } = Vue;
 
 const DEFAULT_STATE = {
   state: true,
-  inputName: "",
+  inputName: '',
   names: [],
-  error: "",
+  error: '',
   showError: false,
-  result: "",
+  result: '',
 };
 
 createApp({
@@ -14,18 +14,34 @@ createApp({
     const data = reactive(DEFAULT_STATE);
     ///methods
     const addNameToList = () => {
-      const userName = data.inputName
-      data.names.push(userName)
-      data.inputName = ''
-
+      const userName = data.inputName;
+      if (validate(userName)) {
+        data.names.push(userName);
+        data.inputName = '';
+        data.showError = false;
+      } else {
+        data.showError = true;
+      }
+    };
+    const validate = (value) => {
+      data.error = "";
+      if (value === "") {
+        data.error = "Sorry no empty name allowed";
+        return false;
+      }
+      if (data.names.includes(value)) {
+        data.error = "Sorry names must be unique";
+        return false;
+      }
+      return true;
     };
     const removeName = (index) => {
-      data.names.splice(index, 1)
-    }
+      data.names.splice(index, 1);
+    };
     return {
       data,
       addNameToList,
-      removeName
+      removeName,
     };
   },
 }).mount("#app");
