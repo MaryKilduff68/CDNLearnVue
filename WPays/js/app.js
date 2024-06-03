@@ -19,9 +19,13 @@ createApp({
       data.inputName = ''
 
     };
+    const removeName = (index) => {
+      data.names.splice(index, 1)
+    }
     return {
       data,
       addNameToList,
+      removeName
     };
   },
 }).mount("#app");
